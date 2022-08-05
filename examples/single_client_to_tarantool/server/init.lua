@@ -14,11 +14,20 @@ box.once('schema-0.0.1', function()
         if_not_exists = true,
         format = {
             { 'id', type = 'number' },
-            { 'name', type = 'string', is_nullable = true }
+            { 'name', type = 'string', is_nullable = true },
+            { 'age', type = 'unsigned', is_nullable = true }
         }
     })
     box.space.users:create_index('pk', {
-        parts = { 'id' }
+        parts = { 'id' },
+        if_not_exists = true,
+        type = 'TREE'
+    })
+    box.space.users:create_index('age', {
+        parts = { 'age' },
+        if_not_exists = true,
+        type = 'TREE',
+        unique = false
     })
 
     box.schema.user.create('authenticator', {
